@@ -1,6 +1,6 @@
 const models = require('../models');
 
-const Domo = models.Domo;
+const { Domo } = models;
 
 const makerPage = (req, res) => {
   Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
@@ -9,7 +9,7 @@ const makerPage = (req, res) => {
       return res.status(400).json({ error: 'An error occurred' });
     }
 
-    return res.render('app', { domos: docs });
+    return res.render('app', { csrfToken: req.csrfToken(), domos: docs });
   });
 };
 
